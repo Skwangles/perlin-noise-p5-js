@@ -103,16 +103,17 @@ function drawGrid(offset) {
 
 // 1D noise line going in X direction
 function wave(offset, inlineOffset) {
+  adjustedOffset = offset * 0.05;
   beginShape();
   noFill();
   stroke(255);
   for (var x = 0; x < width; x++) {
     var y = noise(inlineOffset) * height;
     vertex(x, y);
-    inlineOffset += offset;
+    inlineOffset += adjustedOffset;
   }
   endShape();
-  inlineOffset += offset;
+  inlineOffset += adjustedOffset;
 }
 
 // 1D noise line going in X and Y directions
@@ -162,8 +163,6 @@ function circleNoise(offset) {
 }
 
 // 2D noise field
-var x_important = 0.005;
-var y_important = 0.005;
 var inc = 0.04;
 function twoDNoise(offset) {
   loadPixels();
@@ -173,7 +172,7 @@ function twoDNoise(offset) {
   for (let y = 0; y < height_val; y++) {
     for (let x = 0; x < width_val; x++) {
       let index = (x + y * width_val) * 4;
-      let val = noise(x * x_important, y * y_important, inc) * 255;
+      let val = noise(x * offset * 0.1, y * offset * 0.1, inc) * 255;
       pixels[index] = val;
       pixels[index + 1] = val;
       pixels[index + 2] = val;
